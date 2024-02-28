@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MyPage = () => {
+export const MyPage = () => {
   return (
     <div>MyPage</div>
   )

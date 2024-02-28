@@ -1,8 +1,12 @@
 import React from 'react'
+import Contents from '../../component/contentslist/Contents'
 
-const Home = () => {
+export const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <div>Home</div>
+      <Contents />
+    </div>
   )
 }
 

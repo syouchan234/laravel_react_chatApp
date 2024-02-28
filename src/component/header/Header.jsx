@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { AppBar, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+export const Header = () => {
   const [isLoggedIn, setLoggedIn] = useState(true); // ログイン状態を管理するためのstate
 
   const handleLoginLogout = () => {

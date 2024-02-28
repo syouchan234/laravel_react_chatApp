@@ -12,6 +12,7 @@ import PublicChat from './routes/publicchat/PublicChat';
 import Home from './routes/home/Home';
 import MyPage from './routes/mypage/MyPage';
 import Login from './routes/login/Login';
+import CreateAccount from "./routes/createaccount/CreateAccount";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/publicchat" element={ <PublicChat /> } />
         <Route path="/mypage" element={ <MyPage /> } />
         <Route path="/login" element={ <Login /> } />
+        <Route path="/createaccount" element={ <CreateAccount /> } />
       </Routes>
     </div>
   );
