@@ -1,6 +1,5 @@
 //その他ライブラリ等
 import { Routes, Route } from "react-router-dom";
-// import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 //コンポーネント
