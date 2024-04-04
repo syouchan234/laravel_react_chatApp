@@ -21,8 +21,8 @@ export const Header = () => {
         <Button color="inherit" component={Link} to="/privatechat">
           Private Chat
         </Button>
-        <Button color="inherit" component={Link} to="/publicchat">
-          Public Chat
+        <Button color="inherit" component={Link} to="/dm">
+          DM
         </Button>
         {isLoggedIn ? (
           <Button color="inherit" onClick={handleLoginLogout}>
