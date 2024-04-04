@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import { TextField, Button, Card } from '@mui/material';
 import './Login.css';
 import { Link } from 'react-router-dom';
+import { login } from '../../api/api';
 
-export const LoginForm = ({ onLogin }) => {
-    const [mail, setMail] = useState('');
-    const [password, setPassword] = useState('');
 
+export const LoginForm = ({}) => {
+    const [mail, setMail] = useState(''); // メールアドレス
+    const [password, setPassword] = useState(''); // パスワード
+
+    // ログイン認証処理
     const handleLogin = () => {
-        // ログイン処理（例: ユーザー名とパスワードの簡単な検証）
-        if (mail === 'mail' && password === 'password') {
-            onLogin(); // 親コンポーネントにログインを通知
-        } else {
-            alert('失敗');
-        }
+        login(mail,password);
     };
 
     return (
