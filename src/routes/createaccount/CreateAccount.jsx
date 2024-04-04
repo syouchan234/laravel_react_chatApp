@@ -19,7 +19,7 @@ const CreateAccount = () => {
 
   return (
     <div>
-      <Card className="create-account-card"> {/* カードスタイルを適用 */}
+      <Card className="create-account-card">
       <div>アカウント作成</div>
         <TextField
           label="名前"

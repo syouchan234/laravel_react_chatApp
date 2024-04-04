@@ -1,0 +1,8 @@
+
+.card {
+  width: 300px; /* カードの幅 */
+  padding: 20px; /* カードの内側の余白 */
+  border-radius: 10px; /* カードの角の丸み */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* カードに影を付ける */
+  background-color: #fff; /* カードの背景色 */
+}

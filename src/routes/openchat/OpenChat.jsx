@@ -1,8 +1,13 @@
 import React from 'react'
+import Contents from '../../component/contentslist/Contents'
 
 export const OpenChat = () => {
   return (
-    <div>OpenChat</div>
+    <div>
+      <div>OpenChat</div>
+      <Contents />
+    </div>
+    
   )
 }
 
