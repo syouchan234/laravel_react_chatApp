@@ -12,7 +12,7 @@ export const LoginForm = ({ onLogin }) => {
         if (mail === 'mail' && password === 'password') {
             onLogin(); // 親コンポーネントにログインを通知
         } else {
-            alert('Invalid credentials');
+            alert('失敗');
         }
     };
 

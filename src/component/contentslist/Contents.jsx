@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { fetchData } from "../../api/api";
 
 export const Contents = () => {
@@ -11,7 +11,8 @@ export const Contents = () => {
         console.log(result);
       } catch (error) {
         // エラーハンドリング
-        console.log("おのれ、アボカド帝国の仕業かっ！");
+        console.log("エラーハンドリング処理");
+        console.log(error);
       }
     };
 
