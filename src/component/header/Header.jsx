@@ -1,14 +1,19 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect } from 'react';
 import { AppBar, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { isTokenCheck } from '../../api/api';
 
 export const Header = () => {
-  const [isLoggedIn, setLoggedIn] = useState(true); // ログイン状態を管理するためのstate
+  const [isLoggedIn, setLoggedIn] = useState(); // ログイン状態を管理するためのstate
 
-  const handleLoginLogout = () => {
-    setLoggedIn((prev) => !prev); // ログイン状態を切り替えるトグル関数
-  };
+  useEffect(() => {
+    const checkToken = async () => {
+      const tokenCheck = await isTokenCheck();
+      setLoggedIn(tokenCheck);
+    };
 
+    checkToken();
+  }, []);
   return (
     <AppBar position="static">
       <Toolbar>
@@ -25,8 +30,8 @@ export const Header = () => {
           DM
         </Button>
         {isLoggedIn ? (
-          <Button color="inherit" onClick={handleLoginLogout}>
-            Logout
+          <Button color="inherit" component={Link} to="/mypage">
+            MyPage
           </Button>
         ) : (
           <Button color="inherit" component={Link} to="/login">

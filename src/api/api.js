@@ -1,34 +1,109 @@
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 // ログインを行う処理
 export const login = async (mail, password) => {
-    axios.post('http://localhost/api/login', {
-        email: mail,
-        password: password
-    })
-    // ログイン成功時の処理
-    .then(response => {
-        if(response.status === 200){
-            console.log("トークン："+response.data.token);
-            alert('フロント：ログインに成功しました');// ログイン成功をユーザーに通知
+    try {
+        const response = await axios.post('http://localhost/api/login', {
+            email: mail,
+            password: password
+        });
+        if (response.status === 200) {
+            /**
+             *  トークンをCookieに保存 httpsリクエスト時のみに走るように設定
+             *  本番環境でのみ実装
+             */
+            // cookies.set('token', response.data.token, { path: '/', secure: true });
+            cookies.set('token', response.data.token, { path: '/' }); // トークンをCookieに保存
             window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
-        } else if(response.status === 401) alert("サーバー:" + response.error);// 認証失敗時  
-        else alert("フロント：予期せぬエラーが発生してしまいました。");
-    })
-    // ログイン失敗時の処理
-    .catch(error => {
+            return true;
+        } 
+        else if (response.status === 401) {
+            alert("ログインに失敗しました。");
+            return false;
+        } 
+        else {
+            throw new Error('予期せぬエラーが発生しました');
+        }
+    } catch (error) {
         console.error('ログインエラー:', error);
-        alert('ログインに失敗しました。'+ error.response.statusText);
-    });
+        alert('ログインに失敗しました。' + error.response.statusText);
+        return false; // エラーが発生した場合も失敗を示すfalseを返す
+    }
+};
+
+export const logout = async () => {
+    try {
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        await axios.post('http://localhost/api/logout', null, {
+            headers: {
+                Authorization: `Bearer ${token}` // トークンをリクエストヘッダーに添付
+            }
+        });
+        cookies.remove('token'); // Cookieからtokenを削除
+        // ログアウト後のリダイレクトなどの処理を行う
+        window.location.href = '/login'; // ログインページにリダイレクト
+    } catch (error){
+        console.error('ログアウトエラー',error);
+        alert('ログアウトに失敗しました'+error.response.statusText);
+    }
 }
 
-export const fetchData = async () => {
+// アカウント作成を行う処理
+export const createUser = async (name, accountName, email, password) => {
     try {
-        const response = await fetch('http://localhost/api/post');
+        const response = await fetch('http://localhost/api/createUser', {
+            method: 'POST',
+            body: JSON.stringify({ name, accountName, email, password })
+        });
+        if (response.status === 200) {
+            cookies.set('token', response.data.token, { path: '/' });
+            alert('アカウントの作成に成功しました'); // ログイン成功をユーザーに通知
+            window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
+        }
+        else if (response.status === 401) alert("アカウントの作成に失敗しました。")
+        else throw new Error('アカウントの作成に失敗しました。');
         const data = await response.json();
-        return data;
+    return data;
     } catch (error) {
+    console.error('アカウント作成エラー:', error);
+    throw error;
+    }
+};
+
+// 投稿30件と返信を取得する処理
+export const getPostData = async () => {
+    try {
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        const response = await axios.get('http://localhost/api/post', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 200) {
+            const data = response.data;
+            return data;
+        } else {
+            alert('サーバーエラーが発生しました。');
+            throw new Error('サーバーエラーが発生しました。');
+        }
+    } catch (error) {
+        alert("エラーが発生しました。ログインページに戻ります。");
+        window.location.href = '/login'; // ログインページにリダイレクト
         console.error(error);
         throw error;
     }
 };
+
+/**
+ * トークンの取得状況を通知する関数
+ * 使用用途：
+ * 主に画面の制御などに扱う。
+ * また認証が通っていない場合の制御等にも
+ */
+export const isTokenCheck = () => {
+    const token = cookies.get('token');
+    if(token) return true;
+    else return false;
+}
