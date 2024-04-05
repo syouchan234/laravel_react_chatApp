@@ -53,12 +53,12 @@ const CreateAccount = () => {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <div class="interval">
+        <div className="interval">
           <Button variant="contained" color="primary" onClick={handleCreateAccount}>
             アカウント作成
           </Button>
         </div>
-        <div class="interval">
+        <div className="interval">
           <Button variant="contained" color="primary" component={Link} to="/login">
             戻る
           </Button>

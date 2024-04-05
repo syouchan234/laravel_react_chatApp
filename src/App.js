@@ -14,6 +14,7 @@ import MyPage from './routes/mypage/MyPage';
 import Login from './routes/login/Login';
 import CreateAccount from "./routes/createaccount/CreateAccount";
 
+// 渡す遷移先の情報を格納
 function App() {
   return (
     <div className="App">

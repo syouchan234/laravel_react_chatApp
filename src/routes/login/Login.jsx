@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import { TextField, Button, Card } from '@mui/material';
 import './Login.css';
 import { Link } from 'react-router-dom';
+import { login } from '../../api/api';
 
-export const LoginForm = ({ onLogin }) => {
-    const [mail, setMail] = useState('');
-    const [password, setPassword] = useState('');
-
+export const LoginForm = () => {
+    const [mail, setMail] = useState(''); // メールアドレス
+    const [password, setPassword] = useState(''); // パスワード
+    // ログイン認証処理
     const handleLogin = () => {
-        // ログイン処理（例: ユーザー名とパスワードの簡単な検証）
-        if (mail === 'mail' && password === 'password') {
-            onLogin(); // 親コンポーネントにログインを通知
-        } else {
-            alert('失敗');
-        }
+        login(mail,password);
     };
-
     return (
         <Card className="login-card">
             <TextField
@@ -31,12 +26,12 @@ export const LoginForm = ({ onLogin }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <div class="interval">
+            <div className="interval">
                 <Button variant="contained" color="primary" onClick={handleLogin}>
                     ログイン
                 </Button>
             </div>
-            <div class="interval">
+            <div className="interval">
                 <Button variant="contained" color="primary" component={Link} to="/createaccount">
                     アカウント作成
                 </Button>
