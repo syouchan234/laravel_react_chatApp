@@ -5,35 +5,28 @@ const cookies = new Cookies();
 // ログインを行う処理
 export const login = async (mail, password) => {
     try {
-        if(!isTokenCheck){
-            const response = await axios.post('http://localhost/api/login', {
-                email: mail,
-                password: password
-            });
-            if (response.status === 200) {
-                /**
-                 *  トークンをCookieに保存 httpsリクエスト時のみに走るように設定
-                 *  本番環境でのみ実装
-                 */
-                // cookies.set('token', response.data.token, { path: '/', secure: true });
-                cookies.set('token', response.data.token, { path: '/' }); // トークンをCookieに保存
-                window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
-                return true;
-            } 
-            else if (response.status === 401) {
-                errorCheck();
-                alert("ログインに失敗しました。");
-                return false;
-            } 
-            else {
-                throw new Error('予期せぬエラーが発生しました');
-            }
-        }
+        const response = await axios.post('http://localhost/api/login', {
+            email: mail,
+            password: password
+        });
+        if (response.status === 200) {
+            /**
+             *  トークンをCookieに保存 httpsリクエスト時のみに走るように設定
+             *  本番環境でのみ実装
+             */
+            // cookies.set('token', response.data.token, { path: '/', secure: true });
+            cookies.set('token', response.data.token, { path: '/' }); // トークンをCookieに保存
+            window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
+            return true;
+        } 
+        else if (response.status === 401) {
+            errorCheck();
+            alert("ログインに失敗しました。");
+            return false;
+        } 
         else {
-            alert("既にログイン済みです");
-            
+            throw new Error('予期せぬエラーが発生しました');
         }
-
     } catch (error) {
         errorCheck();
         console.error('ログインエラー:', error);
