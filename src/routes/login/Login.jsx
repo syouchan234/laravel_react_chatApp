@@ -7,9 +7,23 @@ import { login } from '../../api/api';
 export const LoginForm = () => {
     const [mail, setMail] = useState(''); // メールアドレス
     const [password, setPassword] = useState(''); // パスワード
-    // ログイン認証処理
+
     const handleLogin = () => {
-        login(mail,password);
+    if (!mail || !password) {
+        alert('すべてのフィールドを入力してください');
+        return;
+    }
+    if (!isValidEmail(mail)) {
+        alert('有効なメールアドレスを入力してください');
+        return;
+    }
+    login(mail,password);
+    };
+
+    //メールアドレスの正規表現
+    const isValidEmail = (email) => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
     };
     return (
         <Card className="login-card">
