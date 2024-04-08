@@ -51,24 +51,24 @@ export const logout = async () => {
 }
 
 // アカウント作成を行う処理
-export const createUser = async (name, accountName, email, password) => {
+export const createUser = async (name, account_name, email, password) => {
     try {
-        const response = await fetch('http://localhost/api/createUser', {
-            method: 'POST',
-            body: JSON.stringify({ name, accountName, email, password })
+        const response = await axios.post('http://localhost/api/createUser', {
+            name,
+            account_name,
+            email,
+            password
         });
-        if (response.status === 200) {
-            cookies.set('token', response.data.token, { path: '/' });
-            alert('アカウントの作成に成功しました'); // ログイン成功をユーザーに通知
-            window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
-        }
-        else if (response.status === 401) alert("アカウントの作成に失敗しました。")
-        else throw new Error('アカウントの作成に失敗しました。');
-        const data = await response.json();
-    return data;
+        /**
+         *  トークンをCookieに保存 httpsリクエスト時のみに走るように設定
+         *  本番環境でのみ実装
+         */
+        // cookies.set('token', response.data.token, { path: '/', secure: true });
+        cookies.set('token', response.data.token, { path: '/' }); // ブラウザの Cookie ライブラリによって実装する
+        window.location.href = '/openchat';
     } catch (error) {
-    console.error('アカウント作成エラー:', error);
-    throw error;
+        console.error('アカウント作成エラー:', error.response.data);
+        throw new Error('アカウントの作成に失敗しました。');
     }
 };
 
