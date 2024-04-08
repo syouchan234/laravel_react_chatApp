@@ -89,7 +89,7 @@ export const getPostData = async () => {
             throw new Error('サーバーエラーが発生しました。');
         }
     } catch (error) {
-        alert("エラーが発生しました。ログインページに戻ります。");
+        // alert("エラーが発生しました。ログインページに戻ります。");
         window.location.href = '/login'; // ログインページにリダイレクト
         console.error(error);
         throw error;
