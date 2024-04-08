@@ -20,6 +20,7 @@ export const login = async (mail, password) => {
             return true;
         } 
         else if (response.status === 401) {
+            errorCheck();
             alert("ログインに失敗しました。");
             return false;
         } 
@@ -27,6 +28,7 @@ export const login = async (mail, password) => {
             throw new Error('予期せぬエラーが発生しました');
         }
     } catch (error) {
+        errorCheck();
         console.error('ログインエラー:', error);
         alert('ログインに失敗しました。' + error.response.statusText);
         return false; // エラーが発生した場合も失敗を示すfalseを返す
@@ -45,8 +47,10 @@ export const logout = async () => {
         // ログアウト後のリダイレクトなどの処理を行う
         window.location.href = '/login'; // ログインページにリダイレクト
     } catch (error){
+        errorCheck();
         console.error('ログアウトエラー',error);
         alert('ログアウトに失敗しました'+error.response.statusText);
+        window.location.href = '/login';
     }
 }
 
@@ -67,6 +71,7 @@ export const createUser = async (name, account_name, email, password) => {
         cookies.set('token', response.data.token, { path: '/' }); // ブラウザの Cookie ライブラリによって実装する
         window.location.href = '/openchat';
     } catch (error) {
+        errorCheck();
         console.error('アカウント作成エラー:', error.response.data);
         throw new Error('アカウントの作成に失敗しました。');
     }
@@ -89,12 +94,18 @@ export const getPostData = async () => {
             throw new Error('サーバーエラーが発生しました。');
         }
     } catch (error) {
-        // alert("エラーが発生しました。ログインページに戻ります。");
+        errorCheck();
+        alert("エラーが発生しました。ログインページに戻ります。");
         window.location.href = '/login'; // ログインページにリダイレクト
         console.error(error);
         throw error;
     }
 };
+
+// 万が一にエラーが起きた際に対処しておく関数
+export const errorCheck = () => {
+    cookies.remove('token');
+}
 
 /**
  * トークンの取得状況を通知する関数
@@ -102,8 +113,5 @@ export const getPostData = async () => {
  * 主に画面の制御などに扱う。
  * また認証が通っていない場合の制御等にも
  */
-export const isTokenCheck = () => {
-    const token = cookies.get('token');
-    if(token) return true;
-    else return false;
-}
+export const isTokenCheck = () => {return cookies.get('token') ? true : false;}
+
