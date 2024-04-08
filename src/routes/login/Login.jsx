@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { TextField, Button, Card } from '@mui/material';
 import './Login.css';
 import { Link } from 'react-router-dom';
-import { login } from '../../api/api';
+import { login,isTokenCheck } from '../../api/api';
 
 export const LoginForm = () => {
+
+    useEffect(() => {
+        const checkToken = async () => {
+        const tokenCheck = await isTokenCheck();
+        if(tokenCheck)window.location.href = '/mypage';
+    };
+    checkToken();
+    }, []);
+    
     const [mail, setMail] = useState(''); // メールアドレス
     const [password, setPassword] = useState(''); // パスワード
 
