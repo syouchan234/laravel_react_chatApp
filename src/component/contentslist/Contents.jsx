@@ -25,7 +25,6 @@ export const Contents = () => {
       <div className="card">
         {data.map((item) => (
           <div key={item.id}>
-            <h3>{item.title}</h3>
             <p>{item.content}</p>
             <Button variant="contained" color="primary">
               返信
