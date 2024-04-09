@@ -16,6 +16,7 @@ export const login = async (mail, password) => {
              */
             // cookies.set('token', response.data.token, { path: '/', secure: true });
             cookies.set('token', response.data.token, { path: '/' }); // トークンをCookieに保存
+            localStorage.setItem('userData', JSON.stringify(response.data.user));
             window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
             return true;
         } 
@@ -35,6 +36,7 @@ export const login = async (mail, password) => {
     }
 };
 
+// ログアウトを行う処理
 export const logout = async () => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
@@ -102,9 +104,51 @@ export const getPostData = async () => {
     }
 };
 
+// ログインユーザーのIDを取得して投稿処理を行う関数
+export const pushPost = async () => {
+    try {
+        const testtitle = "title";
+        const testcontent = "testcontent";
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        const response = await axios.post('http://localhost/api/post', {
+            title: testtitle,
+            content: testcontent,
+            account_id: getLoggedInUserId() // 認証ユーザーのIDを取得
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 201) {
+            const data = response.data;
+            return data;
+        } else {
+            alert('サーバーエラーが発生しました。');
+            throw new Error('サーバーエラーが発生しました。');
+        }
+    } catch (error) {
+        errorCheck();
+        alert("エラーが発生しました。ログインページに戻ります。");
+        console.error(error);
+        throw error;
+    }
+};
+
+// 認証ユーザーのIDを取得する関数
+const getLoggedInUserId = () => {
+    const user = getUserData(); // ユーザーデータを取得する関数（実装は任意）
+    return user ? user.id : null; // ユーザーが存在すればIDを返す
+};
+
+// ユーザーデータを取得する関数（実際の実装は任意）
+const getUserData = () => {
+    // ローカルストレージやCookieからユーザーデータを取得する処理
+    return localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null;
+};
+
 // 万が一にエラーが起きた際に対処しておく関数
 export const errorCheck = () => {
-    cookies.remove('token');
+    cookies.remove('token');// 保持しているトークンを削除
 }
 
 /**
