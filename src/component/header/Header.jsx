@@ -20,11 +20,11 @@ export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        {isLoggedIn ? (
+        {/* {isLoggedIn ? (
         <Button color="inherit" component={Link} to="/">Home</Button>
         ) : (
         <Button color="inherit" onClick={loginAlert}>Home</Button>
-        )}
+        )} */}
 
         {isLoggedIn ? (
         <Button color="inherit" component={Link} to="/openchat">Open Chat</Button>
