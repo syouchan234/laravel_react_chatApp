@@ -3,17 +3,20 @@ import { Button } from '@mui/material';
 import { getPostData } from '../../api/api';
 
 const Contents = () => {
-  const [data, setData] = useState([]); // 一覧を取得する state
+  const [data, setData] = useState([]); // 一覧を取得するstate
+  const [loading, setLoading] = useState(true); // データ取得中の状態を管理するstate
 
   // データを再取得する関数
   const fetchData = async () => {
     try {
       const result = await getPostData();
       setData(result);
+      setLoading(false); // データ取得完了後にloading状態をfalseに設定
     } catch (error) {
       console.error('データの取得に失敗しました', error);
       // エラーハンドリング
       alert('データの取得に失敗しました');
+      setLoading(false); // エラーが発生した場合もloading状態をfalseに設定
     }
   };
 
@@ -29,21 +32,29 @@ const Contents = () => {
 
   return (
     <div>
-      <h2>Data List</h2>
+      <h2>～愚民の投稿～</h2>
       <Button variant="contained" color="primary" onClick={handleRefresh}>
         更新する
       </Button>
-      <div className="card">
-        {data.map((item) => (
-          <div key={item.id}>
-            <h3>{item.title}</h3>
-            <p>{item.content}</p>
-            <Button variant="contained" color="primary">
-              返信
-            </Button>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="card">
+          {data.length === 0 ? (
+            <p>まだ投稿がありません。</p>
+          ) : (
+            data.map((item) => (
+              <div key={item.id}>
+                {/* <h3>{item.title}</h3> */}
+                <p><b>{item.content}</b></p>
+                <Button>
+                  返信
+                </Button>
+              </div>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 };
