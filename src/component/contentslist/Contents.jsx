@@ -36,6 +36,7 @@ const Contents = () => {
       <Button variant="contained" color="primary" onClick={handleRefresh}>
         更新する
       </Button>
+      <hr></hr>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -51,6 +52,7 @@ const Contents = () => {
                 <Button>
                   返信
                 </Button>
+                <hr></hr>
               </div>
             ))
           )}

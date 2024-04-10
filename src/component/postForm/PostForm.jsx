@@ -34,7 +34,10 @@ const PostForm = ({ onPostSuccess }) => {
     const [open, setOpen] = React.useState(false);
     // ダイアログの表示非表示の制御
     const handleClickOpen = () => {setOpen(true);};
-    const handleClose = () => {setOpen(false);};
+    const handleClose = () => {
+        setFormData.content = '';
+        setOpen(false);
+    };
 
     return (
         <div>
@@ -76,7 +79,6 @@ const PostForm = ({ onPostSuccess }) => {
                             id="outlined-multiline-static"
                             label="投稿内容"
                             multiline
-                            rows={4}
                             name="content"
                             value={formData.content}
                             fullWidth
