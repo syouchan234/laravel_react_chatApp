@@ -10,7 +10,7 @@ export const MyPage = () => {
     <div>
       <div>MyPage</div>
       <Button variant="contained" color="primary" onClick={logoutBtn}>
-          Logout
+        Logout
       </Button>
     </div>
   )

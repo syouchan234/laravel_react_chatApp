@@ -53,7 +53,7 @@ const Contents = () => {
                 <Button>
                   返信
                 </Button>
-                <MoreVertIcon/>
+                <MoreVertIcon />
                 <hr></hr>
               </div>
             ))

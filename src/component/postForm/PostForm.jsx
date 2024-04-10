@@ -33,7 +33,7 @@ const PostForm = ({ onPostSuccess }) => {
 
     const [open, setOpen] = React.useState(false);
     // ダイアログの表示非表示の制御
-    const handleClickOpen = () => {setOpen(true);};
+    const handleClickOpen = () => { setOpen(true); };
     const handleClose = () => {
         setFormData.content = '';
         setOpen(false);
@@ -41,15 +41,15 @@ const PostForm = ({ onPostSuccess }) => {
 
     return (
         <div>
-            <Fab 
-            color="secondary" 
-            aria-label="edit" 
-            onClick={handleClickOpen}
-            style={{
-                position: "fixed",
-                bottom: 16,
-                right: 16,
-            }}>
+            <Fab
+                color="secondary"
+                aria-label="edit"
+                onClick={handleClickOpen}
+                style={{
+                    position: "fixed",
+                    bottom: 16,
+                    right: 16,
+                }}>
                 <EditIcon />
             </Fab>
 

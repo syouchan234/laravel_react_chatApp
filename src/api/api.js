@@ -19,12 +19,12 @@ export const login = async (mail, password) => {
             localStorage.setItem('userData', JSON.stringify(response.data.user));
             window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
             return true;
-        } 
+        }
         else if (response.status === 401) {
             errorCheck();
             alert("ログインに失敗しました。");
             return false;
-        } 
+        }
         else {
             throw new Error('予期せぬエラーが発生しました');
         }
@@ -48,10 +48,10 @@ export const logout = async () => {
         cookies.remove('token'); // Cookieからtokenを削除
         // ログアウト後のリダイレクトなどの処理を行う
         window.location.href = '/login'; // ログインページにリダイレクト
-    } catch (error){
+    } catch (error) {
         errorCheck();
-        console.error('ログアウトエラー',error);
-        alert('ログアウトに失敗しました'+error.response.statusText);
+        console.error('ログアウトエラー', error);
+        alert('ログアウトに失敗しました' + error.response.statusText);
         window.location.href = '/login';
     }
 }
@@ -157,5 +157,5 @@ export const errorCheck = () => {
  * 主に画面の制御などに扱う。
  * また認証が通っていない場合の制御等にも
  */
-export const isTokenCheck = () => {return cookies.get('token') ? true : false;}
+export const isTokenCheck = () => { return cookies.get('token') ? true : false; }
 

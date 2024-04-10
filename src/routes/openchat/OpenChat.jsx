@@ -14,7 +14,7 @@ const OpenChat = () => {
     <div>
       {/* <div>OpenChat</div> */}
       <PostForm onPostSuccess={handlePostSuccess} />
-      <Contents  key={contentsKey}/>
+      <Contents key={contentsKey} />
     </div>
   );
 };

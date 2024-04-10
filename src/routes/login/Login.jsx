@@ -1,38 +1,38 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Card } from '@mui/material';
 import './Login.css';
 import { Link } from 'react-router-dom';
-import { login,isTokenCheck } from '../../api/api';
+import { login, isTokenCheck } from '../../api/api';
 
 export const LoginForm = () => {
 
     useEffect(() => {
         const checkToken = async () => {
-        const tokenCheck = await isTokenCheck();
-        if(tokenCheck)window.location.href = '/mypage';
-    };
-    checkToken();
+            const tokenCheck = await isTokenCheck();
+            if (tokenCheck) window.location.href = '/mypage';
+        };
+        checkToken();
     }, []);
-    
+
     const [mail, setMail] = useState(''); // メールアドレス
     const [password, setPassword] = useState(''); // パスワード
 
     const handleLogin = () => {
-    if (!mail || !password) {
-        alert('すべてのフィールドを入力してください');
-        return;
-    }
-    if (!isValidEmail(mail)) {
-        alert('有効なメールアドレスを入力してください');
-        return;
-    }
-    login(mail,password);
+        if (!mail || !password) {
+            alert('すべてのフィールドを入力してください');
+            return;
+        }
+        if (!isValidEmail(mail)) {
+            alert('有効なメールアドレスを入力してください');
+            return;
+        }
+        login(mail, password);
     };
 
     //メールアドレスの正規表現
     const isValidEmail = (email) => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(email);
+        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return pattern.test(email);
     };
     return (
         <Card className="login-card">
