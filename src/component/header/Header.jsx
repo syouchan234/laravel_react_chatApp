@@ -1,7 +1,8 @@
-import React,{useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { isTokenCheck } from '../../api/api';
+import './Header.css';
 
 export const Header = () => {
   const [isLoggedIn, setLoggedIn] = useState(); // ログイン状態を管理するためのstate
@@ -18,39 +19,37 @@ export const Header = () => {
     checkToken();
   }, []);
   return (
-    <AppBar position="static">
-      <Toolbar>
-        {/* {isLoggedIn ? (
-        <Button color="inherit" component={Link} to="/">Home</Button>
-        ) : (
-        <Button color="inherit" onClick={loginAlert}>Home</Button>
-        )} */}
+    <div className="header">
+      <div className="toolbar">
+        <AppBar position="static" >
+          <Toolbar>
+            {isLoggedIn ? (
+              <Button color="inherit" component={Link} to="/openchat">Open Chat</Button>
+            ) : (
+              <Button color="inherit" onClick={loginAlert} disabled>Open Chat</Button>
+            )}
 
-        {isLoggedIn ? (
-        <Button color="inherit" component={Link} to="/openchat">Open Chat</Button>
-        ) : (
-        <Button color="inherit" onClick={loginAlert} disabled>Open Chat</Button>
-        )}
+            {isLoggedIn ? (
+              <Button color="inherit" component={Link} to="/privatechat">Private Chat</Button>
+            ) : (
+              <Button color="inherit" onClick={loginAlert} disabled>Private Chat</Button>
+            )}
 
-        {isLoggedIn ? (
-        <Button color="inherit" component={Link} to="/privatechat">Private Chat</Button>
-        ) : (
-        <Button color="inherit" onClick={loginAlert} disabled>Private Chat</Button>
-        )}
+            {isLoggedIn ? (
+              <Button color="inherit" component={Link} to="/dm">DM</Button>
+            ) : (
+              <Button color="inherit" onClick={loginAlert} disabled>DM</Button>
+            )}
 
-        {isLoggedIn ? (
-        <Button color="inherit" component={Link} to="/dm">DM</Button>
-        ) : (
-        <Button color="inherit" onClick={loginAlert} disabled>DM</Button>
-        )}
-
-        {isLoggedIn ? (
-        <Button color="inherit" component={Link} to="/mypage">MyPage</Button>
-        ) : (
-        <Button color="inherit" component={Link} to="/login">Login</Button>
-        )}
-      </Toolbar>
-    </AppBar>
+            {isLoggedIn ? (
+              <Button color="inherit" component={Link} to="/mypage">MyPage</Button>
+            ) : (
+              <Button color="inherit" component={Link} to="/login">Login</Button>
+            )}
+          </Toolbar>
+        </AppBar>
+      </div>
+    </div>
   );
 };
 

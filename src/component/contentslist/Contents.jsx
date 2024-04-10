@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getPostData } from '../../api/api';
 
 const Contents = () => {
@@ -36,6 +37,7 @@ const Contents = () => {
       <Button variant="contained" color="primary" onClick={handleRefresh}>
         更新する
       </Button>
+      <hr></hr>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -45,11 +47,14 @@ const Contents = () => {
           ) : (
             data.map((item) => (
               <div key={item.id}>
-                <h3>{item.title}</h3>
+                {/* <h3>{item.title}</h3> */}
+                <h3>{item.account_name}</h3>
                 <p><b>{item.content}</b></p>
                 <Button>
                   返信
                 </Button>
+                <MoreVertIcon/>
+                <hr></hr>
               </div>
             ))
           )}
