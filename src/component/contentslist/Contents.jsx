@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { getPostData } from '../../api/api';
 
 const Contents = () => {
@@ -52,6 +53,7 @@ const Contents = () => {
                 <Button>
                   返信
                 </Button>
+                <MoreVertIcon/>
                 <hr></hr>
               </div>
             ))
