@@ -9,7 +9,7 @@ import Header from './component/header/Header';
 import OpenChat from './routes/openchat/OpenChat';
 import PrivateChat from './routes/privatechat/PrivateChat';
 import DM from './routes/dm/DM';
-import Home from './routes/home/Home';
+// import Home from './routes/home/Home';
 import MyPage from './routes/mypage/MyPage';
 import Login from './routes/login/Login';
 import CreateAccount from "./routes/createaccount/CreateAccount";
@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={ <Home /> } />
+        <Route path="/" element={ <Login /> } />
         <Route path="/openchat" element={ <OpenChat /> } />
         <Route path="/privatechat" element={ <PrivateChat /> } />
         <Route path="/dm" element={ <DM /> } />

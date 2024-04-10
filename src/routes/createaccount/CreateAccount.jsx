@@ -15,7 +15,7 @@ const CreateAccount = () => {
   });
 
   const handleInputChange = (e) => {
-    setFormData({...formData,[e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleCreateAccount = () => {
@@ -34,7 +34,7 @@ const CreateAccount = () => {
     }
     // アカウント作成処理をここに追加
     console.log('Account created:', { name, account_name, mail, password });
-    createUser(name,account_name,mail,password);
+    createUser(name, account_name, mail, password);
   };
 
   //メールアドレスの正規表現
