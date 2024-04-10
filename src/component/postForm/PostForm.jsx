@@ -38,7 +38,15 @@ const PostForm = ({ onPostSuccess }) => {
 
     return (
         <div>
-            <Fab color="secondary" aria-label="edit" onClick={handleClickOpen}>
+            <Fab 
+            color="secondary" 
+            aria-label="edit" 
+            onClick={handleClickOpen}
+            style={{
+                position: "fixed",
+                bottom: 16,
+                right: 16,
+            }}>
                 <EditIcon />
             </Fab>
 
@@ -60,7 +68,7 @@ const PostForm = ({ onPostSuccess }) => {
                 >
                     <DialogTitle>投稿</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>投稿内容を入力してもろて</DialogContentText>
+                        <DialogContentText>入力してもろて</DialogContentText>
                         <TextField
                             autoFocus
                             required

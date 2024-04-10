@@ -45,7 +45,7 @@ const Contents = () => {
           ) : (
             data.map((item) => (
               <div key={item.id}>
-                {/* <h3>{item.title}</h3> */}
+                <h3>{item.title}</h3>
                 <p><b>{item.content}</b></p>
                 <Button>
                   返信

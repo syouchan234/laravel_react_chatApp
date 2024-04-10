@@ -107,7 +107,7 @@ export const getPostData = async () => {
 // ログインユーザーのIDを取得して投稿処理を行う関数
 export const pushPost = async (content) => {
     try {
-        const testtitle = "null";
+        const testtitle = "Empty";
         const token = cookies.get('token'); // Cookieからトークンを取得
         const response = await axios.post('http://localhost/api/post', {
             title: testtitle,
