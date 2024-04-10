@@ -129,6 +129,7 @@ export const pushPost = async (content) => {
         errorCheck();
         alert("エラーが発生しました。ログインページに戻ります。");
         console.error(error);
+        window.location.href = '/login'; // ログインページにリダイレクト
         throw error;
     }
 };
