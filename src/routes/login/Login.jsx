@@ -34,33 +34,41 @@ export const LoginForm = () => {
         const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return pattern.test(email);
     };
+
+    const AL = () => {
+        alert("お試し版にんな機能あるかいな！");
+    }
     return (
-        <Card className="login-card">
-            <TextField
-                label="メールアドレス"
-                variant="outlined"
-                value={mail}
-                onChange={(e) => setMail(e.target.value)}
-            />
-            <TextField
-                label="パスワード"
-                variant="outlined"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <div className="interval">
-                <Button variant="contained" color="primary" onClick={handleLogin}>
-                    ログイン
-                </Button>
-            </div>
-            <div className="interval">
-                <Button variant="contained" color="primary" component={Link} to="/createaccount">
-                    アカウント作成
-                </Button>
-            </div>
-            <div>パスワードを忘れた方はこちら</div>
-        </Card>
+        <div>
+            <h1>お試し運用</h1>
+            <Card className="login-card">
+                <TextField
+                    label="メールアドレス"
+                    variant="outlined"
+                    value={mail}
+                    onChange={(e) => setMail(e.target.value)}
+                />
+                <TextField
+                    label="パスワード"
+                    variant="outlined"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="interval">
+                    <Button variant="contained" color="primary" onClick={handleLogin}>
+                        ログイン
+                    </Button>
+                </div>
+                <div className="interval">
+                    <Button variant="contained" color="primary" component={Link} to="/createaccount">
+                        アカウント作成
+                    </Button>
+                </div>
+                <br></br>
+                <div onClick={AL}>パスワードを忘れた方はこちら</div>
+            </Card>
+        </div>
     );
 };
 

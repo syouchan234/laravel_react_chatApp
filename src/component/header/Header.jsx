@@ -30,13 +30,13 @@ export const Header = () => {
             )}
 
             {isLoggedIn ? (
-              <Button color="inherit" component={Link} to="/privatechat">Private Chat</Button>
+              <Button color="inherit" component={Link} to="/privatechat" disabled>Private Chat</Button>
             ) : (
               <Button color="inherit" onClick={loginAlert} disabled>Private Chat</Button>
             )}
 
             {isLoggedIn ? (
-              <Button color="inherit" component={Link} to="/dm">DM</Button>
+              <Button color="inherit" component={Link} to="/dm" disabled>DM</Button>
             ) : (
               <Button color="inherit" onClick={loginAlert} disabled>DM</Button>
             )}
