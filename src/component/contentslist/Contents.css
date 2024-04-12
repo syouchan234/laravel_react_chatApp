@@ -1,0 +1,12 @@
+.card {
+  /* カードの幅 */
+  width: 300px;
+  /* カードの内側の余白 */
+  padding: 20px;
+  /* カードの角の丸み */
+  border-radius: 10px;
+  /* カードに影を付ける */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* カードの背景色 */
+  background-color: #fff;
+}
