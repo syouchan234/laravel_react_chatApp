@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { getPostData } from '../../api/api';
+import { getPostData, pushComment } from '../../api/api';
 
 const Contents = () => {
   const [data, setData] = useState([]); // 一覧を取得するstate
@@ -31,9 +31,15 @@ const Contents = () => {
     fetchData(); // データの再取得
   };
 
+  const comment = () => {
+    const postId = 1;
+    const content = "返信テスト"
+    pushComment(postId, content);
+  }
+
   return (
     <div>
-      <h2>～愚民の投稿～</h2>
+      <h2>～民衆の投稿～</h2>
       <Button variant="contained" color="primary" onClick={handleRefresh}>
         更新する
       </Button>
@@ -47,10 +53,9 @@ const Contents = () => {
           ) : (
             data.map((item) => (
               <div key={item.id}>
-                {/* <h3>{item.title}</h3> */}
                 <h3>{item.account_name}</h3>
                 <p><b>{item.content}</b></p>
-                <Button>
+                <Button onClick={comment}>
                   返信
                 </Button>
                 <MoreVertIcon />

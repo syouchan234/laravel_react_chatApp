@@ -2,11 +2,10 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
-//http://192.168.115.81/
 // ログインを行う処理
 export const login = async (mail, password) => {
     try {
-        const response = await axios.post('http://192.168.115.65/api/login', {
+        const response = await axios.post('http://localhost/api/login', {
             email: mail,
             password: password
         });
@@ -41,7 +40,7 @@ export const login = async (mail, password) => {
 export const logout = async () => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
-        await axios.post('http://192.168.115.65/api/logout', null, {
+        await axios.post('http://localhost/api/logout', null, {
             headers: {
                 Authorization: `Bearer ${token}` // トークンをリクエストヘッダーに添付
             }
@@ -60,7 +59,7 @@ export const logout = async () => {
 // アカウント作成を行う処理
 export const createUser = async (name, account_name, email, password) => {
     try {
-        const response = await axios.post('http://192.168.115.65/api/createUser', {
+        const response = await axios.post('http://localhost/api/createUser', {
             name,
             account_name,
             email,
@@ -84,7 +83,7 @@ export const createUser = async (name, account_name, email, password) => {
 export const getPostData = async () => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
-        const response = await axios.get('http://192.168.115.65/api/post', {
+        const response = await axios.get('http://localhost/api/post', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -108,10 +107,8 @@ export const getPostData = async () => {
 // ログインユーザーのIDを取得して投稿処理を行う関数
 export const pushPost = async (content) => {
     try {
-        const testtitle = "Empty";
         const token = cookies.get('token'); // Cookieからトークンを取得
-        const response = await axios.post('http://192.168.115.65/api/post', {
-            title: testtitle,
+        const response = await axios.post('http://localhost/api/post', {
             content,
             account_id: getLoggedInUserId() // 認証ユーザーのIDを取得
         }, {
@@ -132,6 +129,22 @@ export const pushPost = async (content) => {
         console.error(error);
         window.location.href = '/login'; // ログインページにリダイレクト
         throw error;
+    }
+};
+
+// 投稿の返信機能の作成
+export const pushComment = async (postId, content) => {
+    try {
+        const token = cookies.get('token');
+        const response = await axios.post(
+            `http://localhost/api/comments`, // コメント投稿APIのエンドポイント
+            { post_id: postId, content, account_id: getLoggedInUserId() }, // リクエスト本文
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('コメント投稿エラー:', error);
+        throw new Error('コメントの投稿に失敗しました。');
     }
 };
 
