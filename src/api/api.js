@@ -19,12 +19,12 @@ export const login = async (mail, password) => {
             localStorage.setItem('userData', JSON.stringify(response.data.user));
             window.location.href = '/openchat'; // 遷移先のURLにリダイレクト
             return true;
-        } 
+        }
         else if (response.status === 401) {
             errorCheck();
             alert("ログインに失敗しました。");
             return false;
-        } 
+        }
         else {
             throw new Error('予期せぬエラーが発生しました');
         }
@@ -48,10 +48,10 @@ export const logout = async () => {
         cookies.remove('token'); // Cookieからtokenを削除
         // ログアウト後のリダイレクトなどの処理を行う
         window.location.href = '/login'; // ログインページにリダイレクト
-    } catch (error){
+    } catch (error) {
         errorCheck();
-        console.error('ログアウトエラー',error);
-        alert('ログアウトに失敗しました'+error.response.statusText);
+        console.error('ログアウトエラー', error);
+        alert('ログアウトに失敗しました' + error.response.statusText);
         window.location.href = '/login';
     }
 }
@@ -107,10 +107,8 @@ export const getPostData = async () => {
 // ログインユーザーのIDを取得して投稿処理を行う関数
 export const pushPost = async (content) => {
     try {
-        const testtitle = "Empty";
         const token = cookies.get('token'); // Cookieからトークンを取得
         const response = await axios.post('http://localhost/api/post', {
-            title: testtitle,
             content,
             account_id: getLoggedInUserId() // 認証ユーザーのIDを取得
         }, {
@@ -131,6 +129,22 @@ export const pushPost = async (content) => {
         console.error(error);
         window.location.href = '/login'; // ログインページにリダイレクト
         throw error;
+    }
+};
+
+// 投稿の返信機能の作成
+export const pushComment = async (postId, content) => {
+    try {
+        const token = cookies.get('token');
+        const response = await axios.post(
+            `http://localhost/api/comments`, // コメント投稿APIのエンドポイント
+            { post_id: postId, content, account_id: getLoggedInUserId() }, // リクエスト本文
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+        return response.data;
+    } catch (error) {
+        console.error('コメント投稿エラー:', error);
+        throw new Error('コメントの投稿に失敗しました。');
     }
 };
 
@@ -157,5 +171,5 @@ export const errorCheck = () => {
  * 主に画面の制御などに扱う。
  * また認証が通っていない場合の制御等にも
  */
-export const isTokenCheck = () => {return cookies.get('token') ? true : false;}
+export const isTokenCheck = () => { return cookies.get('token') ? true : false; }
 

@@ -20,13 +20,13 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/" element={ <Login /> } />
-        <Route path="/openchat" element={ <OpenChat /> } />
-        <Route path="/privatechat" element={ <PrivateChat /> } />
-        <Route path="/dm" element={ <DM /> } />
-        <Route path="/mypage" element={ <MyPage /> } />
-        <Route path="/login" element={ <Login /> } />
-        <Route path="/createaccount" element={ <CreateAccount /> } />
+        <Route path="/" element={<Login />} />
+        <Route path="/openchat" element={<OpenChat />} />
+        <Route path="/privatechat" element={<PrivateChat />} />
+        <Route path="/dm" element={<DM />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/createaccount" element={<CreateAccount />} />
       </Routes>
     </div>
   );

@@ -1,10 +1,12 @@
 .header {
-    position: sticky; /*※IEではバグるらしい */
+    /*※IEではバグるらしい */
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 10;
-    width: 100%; /* ヘッダーの幅を100%に設定 */
+    /* ヘッダーの幅を100%に設定 */
+    width: 100%;
 }
 
 .toolbar {
