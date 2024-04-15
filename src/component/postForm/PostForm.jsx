@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
-import { Button, TextField, Fab, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import {
+    Button,
+    TextField,
+    Fab,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
+} from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import SendIcon from '@mui/icons-material/Send';
 import { pushPost } from '../../api/api';
 
 const PostForm = ({ onPostSuccess }) => {
@@ -33,23 +43,18 @@ const PostForm = ({ onPostSuccess }) => {
 
     const [open, setOpen] = React.useState(false);
     // ダイアログの表示非表示の制御
-    const handleClickOpen = () => { setOpen(true); };
+    const handleClickOpen = () => {
+        setOpen(true);
+        setFormData({ content: '' });
+    };
     const handleClose = () => {
-        setFormData.content = '';
+        setFormData({ content: '' });
         setOpen(false);
     };
 
     return (
         <div>
-            <Fab
-                color="secondary"
-                aria-label="edit"
-                onClick={handleClickOpen}
-                style={{
-                    position: "fixed",
-                    bottom: 16,
-                    right: 16,
-                }}>
+            <Fab color="secondary" aria-label="edit" onClick={handleClickOpen} style={{ position: "fixed", bottom: 16, right: 16, }}>
                 <EditIcon />
             </Fab>
 
@@ -88,7 +93,9 @@ const PostForm = ({ onPostSuccess }) => {
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
-                        <Button variant="contained" color="primary" onClick={post}>ポスト</Button>
+                        <Button variant="contained" onClick={post} endIcon={<SendIcon />}>
+                            Send
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </React.Fragment>

@@ -148,6 +148,48 @@ export const pushComment = async (postId, content) => {
     }
 };
 
+// ユーザー情報の取得API
+export const getUserProfile = async () => {
+    try {
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        const response = await axios.get('http://localhost/api/profile', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 200) {
+            const data = response.data;
+            console.log(data);
+            return data;
+        } else {
+            alert('サーバーエラーが発生しました。');
+            throw new Error('サーバーエラーが発生しました。');
+        }
+    } catch (error) {
+        errorCheck();
+        alert("エラーが発生しました。ログインページに戻ります。");
+        window.location.href = '/login'; // ログインページにリダイレクト
+        console.error(error);
+        throw error;
+    }
+};
+
+// 外部ユーザーからのユーザープロフィール情報の取得
+export const getExternalUserProfile = async (accountId) => {
+    try {
+        const response = await axios.get(`profile/${accountId}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw new Error(error);
+    }
+};
+
+// 万が一にエラーが起きた際に対処しておく関数
+export const errorCheck = () => {
+    cookies.remove('token');// 保持しているトークンを削除
+}
+
 // 認証ユーザーのIDを取得する関数
 const getLoggedInUserId = () => {
     const user = getUserData(); // ユーザーデータを取得する関数（実装は任意）
@@ -159,11 +201,6 @@ const getUserData = () => {
     // ローカルストレージやCookieからユーザーデータを取得する処理
     return localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null;
 };
-
-// 万が一にエラーが起きた際に対処しておく関数
-export const errorCheck = () => {
-    cookies.remove('token');// 保持しているトークンを削除
-}
 
 /**
  * トークンの取得状況を通知する関数
