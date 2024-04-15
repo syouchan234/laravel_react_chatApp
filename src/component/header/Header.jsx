@@ -24,13 +24,13 @@ export const Header = () => {
         <AppBar position="static" >
           <Toolbar>
             {isLoggedIn ? (
-              <Button color="inherit" component={Link} to="/openchat">Open Chat</Button>
+              <Button color="inherit" component={Link} to="/openchat">Open</Button>
             ) : (
               <Button color="inherit" onClick={loginAlert} disabled>Open Chat</Button>
             )}
 
             {isLoggedIn ? (
-              <Button color="inherit" component={Link} to="/privatechat" disabled>Private Chat</Button>
+              <Button color="inherit" component={Link} to="/privatechat" disabled>Private</Button>
             ) : (
               <Button color="inherit" onClick={loginAlert} disabled>Private Chat</Button>
             )}
