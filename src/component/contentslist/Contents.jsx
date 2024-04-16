@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Button, IconButton } from '@mui/material';
 import { getPostData, pushComment } from '../../api/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV, faComment, faSyncAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const Contents = () => {
   const [data, setData] = useState([]); // 一覧を取得するstate
@@ -13,6 +14,7 @@ const Contents = () => {
       const result = await getPostData();
       setData(result);
       setLoading(false); // データ取得完了後にloading状態をfalseに設定
+      console.log(result);
     } catch (error) {
       console.error('データの取得に失敗しました', error);
       // エラーハンドリング
@@ -36,12 +38,17 @@ const Contents = () => {
     const content = "返信テスト"
     pushComment(postId, content);
   }
+  
+  const [isLiked, setIsLiked] = useState(false); // いいね済みかどうかを管理するstate
+  const handleLike = () => {
+    setIsLiked(!isLiked); // いいね/いいね解除を切り替える
+  };
 
   return (
     <div>
-      <h2>～民衆の投稿～</h2>
+      <br></br>
       <Button variant="contained" color="primary" onClick={handleRefresh}>
-        更新する
+        <FontAwesomeIcon icon={faSyncAlt} />
       </Button>
       <hr></hr>
       {loading ? (
@@ -55,10 +62,15 @@ const Contents = () => {
               <div key={item.id}>
                 <h3>{item.account_name}</h3>
                 <p><b>{item.content}</b></p>
-                <Button onClick={comment}>
-                  返信
-                </Button>
-                <MoreVertIcon />
+                <IconButton onClick={comment}>
+                  <FontAwesomeIcon icon={faComment} />
+                </IconButton>
+                <IconButton onClick={handleLike}>
+                  <FontAwesomeIcon icon={faHeart} color={isLiked ? 'red' : 'gray'} />
+                </IconButton>
+                <IconButton aria-label="オプション">
+                  <FontAwesomeIcon icon={faEllipsisV} />
+                </IconButton>
                 <hr></hr>
               </div>
             ))
