@@ -38,18 +38,22 @@ const MyPage = () => {
       <b>アカウント情報</b>
       {userProfile && (
         <div>
-          <p>ユーザー名: {userProfile.accounts.name}</p>
-          <p>アカウント名: {userProfile.accounts.account_name}</p>
-          <p>メールアドレス: {userProfile.accounts.email}</p>
-          <p>登録日時: {formatDate(userProfile.accounts.created_at)}</p>
-          <p>更新日時: {formatDate(userProfile.accounts.updated_at)}</p>
+          <p>ユーザー名: {userProfile.name}</p>
+          <p>アカウント名: {userProfile.account_name}</p>
+          <p>メールアドレス: {userProfile.email}</p>
+          <p>誕生日：{userProfile.birthday}</p>
+          <p>性別：{userProfile.gender}</p>
+          <p>場所：{userProfile.place}</p>
+          <p>自己紹介：{userProfile.introduction}</p>
+          <p>登録日時: {formatDate(userProfile.created_at)}</p>
+          <p>更新日時: {formatDate(userProfile.updated_at)}</p>
         </div>
       )}
       <Button variant="contained" color="primary" onClick={handleLogout}>
         ログアウト
       </Button>
       <Button variant="contained" color="primary">
-        情報の変更
+        プロフィールの編集
       </Button>
     </div>
   );
