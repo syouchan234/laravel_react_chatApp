@@ -38,10 +38,19 @@ const Contents = () => {
     const content = "返信テスト"
     pushComment(postId, content);
   }
-  
+
+  // いいね/いいね解除を切り替える処理
   const [isLiked, setIsLiked] = useState(false); // いいね済みかどうかを管理するstate
   const handleLike = () => {
-    setIsLiked(!isLiked); // いいね/いいね解除を切り替える
+    setIsLiked(!isLiked);
+  };
+
+  const [commentVisible, setCommentVisible] = useState({});
+  const toggleCommentVisibility = (postId) => {
+    setCommentVisible((prev) => ({
+      ...prev,
+      [postId]: !prev[postId], // 現在の状態を反転させる
+    }));
   };
 
   return (
@@ -71,6 +80,23 @@ const Contents = () => {
                 <IconButton aria-label="オプション">
                   <FontAwesomeIcon icon={faEllipsisV} />
                 </IconButton>
+                {/* コメントの表示 */}
+                {commentVisible[item.id] && item.comments.length > 0 && (
+                  <div>
+                    <div onClick={() => toggleCommentVisibility(item.id)}>スレッドを非表示</div>
+                    {item.comments.map((comment) => (
+                      <div key={comment.id}>
+                        <p><b>{comment.account_name}</b></p>
+                        <p>{comment.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {!commentVisible[item.id] && item.comments.length > 0 && (
+                  <div>
+                    <div onClick={() => toggleCommentVisibility(item.id)}>スレッドを表示</div>
+                  </div>
+                )}
                 <hr></hr>
               </div>
             ))
