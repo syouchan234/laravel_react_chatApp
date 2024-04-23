@@ -1,0 +1,28 @@
+/* カードスタイル */
+.create-account-card {
+    width: 300px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* TextFieldのスタイル */
+.create-account-card .MuiTextField-root {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Buttonのスタイル */
+.create-account-card .MuiButton-root {
+    width: 100%;
+}
+
+.interval {
+    margin: 2%;
+}
