@@ -33,7 +33,7 @@ const CreateAccount = () => {
       return;
     }
     // アカウント作成処理をここに追加
-    console.log('Account created:', { name, account_name, mail, password });
+    // console.log('Account created:', { name, account_name, mail, password });
     createUser(name, account_name, mail, password);
   };
 
