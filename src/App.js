@@ -13,6 +13,8 @@ import DM from './routes/dm/DM';
 import MyPage from './routes/mypage/MyPage';
 import Login from './routes/login/Login';
 import CreateAccount from "./routes/createaccount/CreateAccount";
+import EditProfile from "./routes/editprofile/EditProfile";
+import Playground from "./component/playground/playground";
 
 // 渡す遷移先の情報を格納
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createaccount" element={<CreateAccount />} />
+        <Route path="/editprofile" element={<EditProfile/>}/>
+        <Route path="/playground" element={<Playground/>}></Route>
       </Routes>
     </div>
   );

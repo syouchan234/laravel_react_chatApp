@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem } from '@mui/material';
 import { getPostData, pushComment } from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faComment, faSyncAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -53,6 +53,15 @@ const Contents = () => {
     }));
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
       <br></br>
@@ -77,8 +86,8 @@ const Contents = () => {
                 <IconButton onClick={handleLike}>
                   <FontAwesomeIcon icon={faHeart} color={isLiked ? 'red' : 'gray'} />
                 </IconButton>
-                <IconButton aria-label="オプション">
-                  <FontAwesomeIcon icon={faEllipsisV} />
+                <IconButton aria-label="オプション" onClick={handleClick}>
+                  <FontAwesomeIcon icon={faEllipsisV}/>
                 </IconButton>
                 {/* コメントの表示 */}
                 {commentVisible[item.id] && item.comments.length > 0 && (
@@ -103,6 +112,26 @@ const Contents = () => {
           )}
         </div>
       )}
+
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        <MenuItem onClick={handleClose}>Edit</MenuItem>
+        <MenuItem onClick={handleClose}>Delete</MenuItem>
+        <MenuItem onClick={handleClose}>Report</MenuItem>
+      </Menu>
     </div>
   );
 };
