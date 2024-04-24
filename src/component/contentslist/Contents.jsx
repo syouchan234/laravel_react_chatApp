@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, IconButton, Menu, MenuItem } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem, CircularProgress, DialogActions, TextField, Dialog, DialogTitle } from '@mui/material';
 import { getPostData, pushComment } from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faComment, faSyncAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -33,18 +33,47 @@ const Contents = () => {
     fetchData(); // データの再取得
   };
 
-  const comment = () => {
-    const postId = 1;
-    const content = "返信テスト"
-    pushComment(postId, content);
+  // // 投稿idを取得してコメント返信モーダルを立ち上げる
+  const [formData, setFormData] = useState({
+    post_id: '',
+    content: '',
+  });
+  const [dialogopen, setOpen] = React.useState(false);
+  const DialogOpen = (id) => { 
+    setFormData({ post_id: id });
+    setOpen(true); 
+  };
+  const DialogClose = () => { setOpen(false); };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const comment = async () => {
+    const {post_id, content} = formData;
+    if(!content){
+      alert("コメントを入力してください");
+      return;
+    }
+    try {
+      await pushComment(post_id,content);
+      DialogClose();
+      fetchData();
+    } catch(error) {
+      console.error('コメントに失敗しました。', error);
+      alert('コメントに失敗しました。もう一度お試しください。');
+    }
   }
 
-  // いいね/いいね解除を切り替える処理
+  // いいね/いいね解除を切り替える処理(未完成)
   const [isLiked, setIsLiked] = useState(false); // いいね済みかどうかを管理するstate
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
 
+  //スレッドの表示非表示処理の実装
   const [commentVisible, setCommentVisible] = useState({});
   const toggleCommentVisibility = (postId) => {
     setCommentVisible((prev) => ({
@@ -62,15 +91,47 @@ const Contents = () => {
     setAnchorEl(null);
   };
 
+  // アカウントidを取得（相手のプロフィール表示画面の制御実装予定）
+  const getAccount_id = (account_id) => {
+    console.log(account_id);
+  }
+
   return (
     <div>
+      <Dialog
+        open={dialogopen}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          返信
+        </DialogTitle>
+        <TextField
+          autoFocus
+          required
+          margin="dense"
+          id="outlined-multiline-static"
+          label="投稿内容"
+          multiline
+          name="content"
+          value={formData.content}
+          fullWidth
+          variant="outlined"
+          onChange={handleInputChange}
+        />
+        <DialogActions>
+          <Button onClick={DialogClose}>CANCEL</Button>
+          <Button variant="contained" color="primary" onClick={comment}>SEND</Button>
+        </DialogActions>
+      </Dialog>
       <br></br>
       <Button variant="contained" color="primary" onClick={handleRefresh}>
         <FontAwesomeIcon icon={faSyncAlt} />
       </Button>
       <hr></hr>
       {loading ? (
-        <p>Loading...</p>
+        <CircularProgress />
       ) : (
         <div className="card">
           {data.length === 0 ? (
@@ -78,16 +139,16 @@ const Contents = () => {
           ) : (
             data.map((item) => (
               <div key={item.id}>
-                <h3>{item.account_name}</h3>
+                <h3 onClick={() => getAccount_id(item.account_id)}>{item.account_name}</h3>
                 <p><b>{item.content}</b></p>
-                <IconButton onClick={comment}>
+                <IconButton onClick={() => DialogOpen(item.id)}>
                   <FontAwesomeIcon icon={faComment} />
                 </IconButton>
                 <IconButton onClick={handleLike}>
                   <FontAwesomeIcon icon={faHeart} color={isLiked ? 'red' : 'gray'} />
                 </IconButton>
                 <IconButton aria-label="オプション" onClick={handleClick}>
-                  <FontAwesomeIcon icon={faEllipsisV}/>
+                  <FontAwesomeIcon icon={faEllipsisV} />
                 </IconButton>
                 {/* コメントの表示 */}
                 {commentVisible[item.id] && item.comments.length > 0 && (

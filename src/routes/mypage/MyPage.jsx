@@ -96,15 +96,13 @@ const MyPage = () => {
         <div>
           {userProfile.posts.map((post) => (
             <div key={post.id}>
-              <p><strong>投稿内容:</strong> {post.content}</p>
               <p><strong>作成日時:</strong> {formatDate(post.created_at)}</p>
+              <p><strong>投稿内容:</strong> {post.content}</p>
+              <hr></hr>
             </div>
           ))}
-          <hr></hr>
         </div>
       )}
-
-
     </div>
   );
 };
