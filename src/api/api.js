@@ -129,12 +129,12 @@ export const pushPost = async (content) => {
 };
 
 // 投稿の返信機能の作成
-export const pushComment = async (content) => {
+export const pushComment = async (postId, content) => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
         const response = await axios.post('http://localhost/api/comments', {
-            content,
-            account_id: getLoggedInUserId() // ログインユーザーのIDを取得
+            post_id: postId,
+            content: content
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -220,17 +220,17 @@ export const errorCheck = () => {
     cookies.remove('token');// 保持しているトークンを削除
 }
 
-// 認証ユーザーのIDを取得する関数
-const getLoggedInUserId = () => {
-    const user = getUserData(); // ユーザーデータを取得する関数（実装は任意）
-    return user ? user.id : null; // ユーザーが存在すればIDを返す
-};
+// // 認証ユーザーのIDを取得する関数
+// const getLoggedInUserId = () => {
+//     const user = getUserData(); // ユーザーデータを取得する関数（実装は任意）
+//     return user ? user.id : null; // ユーザーが存在すればIDを返す
+// };
 
-// ユーザーデータを取得する関数（実際の実装は任意）
-const getUserData = () => {
-    // ローカルストレージやCookieからユーザーデータを取得する処理
-    return localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null;
-};
+// // ユーザーデータを取得する関数（実際の実装は任意）
+// const getUserData = () => {
+//     // ローカルストレージやCookieからユーザーデータを取得する処理
+//     return localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null;
+// };
 
 /**
  * トークンの取得状況を通知する関数

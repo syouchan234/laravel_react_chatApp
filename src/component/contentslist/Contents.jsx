@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, IconButton, Menu, MenuItem } from '@mui/material';
+import { Button, IconButton, Menu, MenuItem, CircularProgress } from '@mui/material';
 import { getPostData, pushComment } from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faComment, faSyncAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -58,6 +58,7 @@ const Contents = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -70,7 +71,7 @@ const Contents = () => {
       </Button>
       <hr></hr>
       {loading ? (
-        <p>Loading...</p>
+        <CircularProgress />
       ) : (
         <div className="card">
           {data.length === 0 ? (
