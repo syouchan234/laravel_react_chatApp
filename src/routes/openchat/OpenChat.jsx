@@ -6,7 +6,8 @@ const OpenChat = () => {
   const [contentsKey, setContentsKey] = useState(0);
   const handlePostSuccess = () => {
     // 投稿が成功した後に Contents コンポーネントを更新する
-    // Contents コンポーネントの key プロパティを変更して再レンダリングをトリガーする
+    // Contents コンポーネントの key プロパティを変更して再レンダリングをトリガーして
+    // 最新の投稿情報を取得する
     setContentsKey((prevKey) => prevKey + 1);
   };
 

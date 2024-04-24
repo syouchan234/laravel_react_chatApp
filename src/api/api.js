@@ -104,13 +104,12 @@ export const getPostData = async () => {
     }
 };
 
-// ログインユーザーのIDを取得して投稿処理を行う関数
+// 投稿処理を行う関数
 export const pushPost = async (content) => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
         const response = await axios.post('http://localhost/api/post', {
             content,
-            account_id: getLoggedInUserId() // 認証ユーザーのIDを取得
         }, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -124,32 +123,63 @@ export const pushPost = async (content) => {
             throw new Error('サーバーエラーが発生しました。');
         }
     } catch (error) {
-        errorCheck();
         alert("エラーが発生しました。ログインページに戻ります。");
-        console.error(error);
-        window.location.href = '/login'; // ログインページにリダイレクト
         throw error;
     }
 };
 
 // 投稿の返信機能の作成
-export const pushComment = async (postId, content) => {
+export const pushComment = async (content) => {
     try {
-        const token = cookies.get('token');
-        const response = await axios.post(
-            `http://localhost/api/comments`, // コメント投稿APIのエンドポイント
-            { post_id: postId, content, account_id: getLoggedInUserId() }, // リクエスト本文
-            { headers: { Authorization: `Bearer ${token}` } }
-        );
-        return response.data;
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        const response = await axios.post('http://localhost/api/comments', {
+            content,
+            account_id: getLoggedInUserId() // ログインユーザーのIDを取得
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 201) {
+            const data = response.data;
+            return data;
+        } else {
+            alert('サーバーエラーが発生しました。');
+            throw new Error('サーバーエラーが発生しました。');
+        }
     } catch (error) {
-        console.error('コメント投稿エラー:', error);
-        throw new Error('コメントの投稿に失敗しました。');
+        throw error;
     }
 };
 
 // ユーザー情報の取得API
 export const getUserProfile = async () => {
+    try {
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        const response = await axios.get('http://localhost/api/profile', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (response.status === 200) {
+            const data = response.data;
+            console.log(data);
+            return data;
+        } else {
+            alert('サーバーエラーが発生しました。');
+            throw new Error('サーバーエラーが発生しました。');
+        }
+    } catch (error) {
+        errorCheck();
+        alert("エラーが発生しました。ログインページに戻ります。");
+        window.location.href = '/login'; // ログインページにリダイレクト
+        console.error(error);
+        throw error;
+    }
+};
+
+// ユーザー情報の更新API
+export const updateUserProfile = async () => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
         const response = await axios.get('http://localhost/api/profile', {
