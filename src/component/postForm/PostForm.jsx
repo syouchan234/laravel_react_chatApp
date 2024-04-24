@@ -85,7 +85,7 @@ const PostForm = ({ onPostSuccess }) => {
                         name="content"
                         value={formData.content}
                         fullWidth
-                        variant="outlined" // outlinedに変更
+                        variant="outlined"
                         onChange={handleInputChange}
                     />
                 </DialogContent>

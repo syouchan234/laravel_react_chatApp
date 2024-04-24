@@ -220,18 +220,6 @@ export const errorCheck = () => {
     cookies.remove('token');// 保持しているトークンを削除
 }
 
-// // 認証ユーザーのIDを取得する関数
-// const getLoggedInUserId = () => {
-//     const user = getUserData(); // ユーザーデータを取得する関数（実装は任意）
-//     return user ? user.id : null; // ユーザーが存在すればIDを返す
-// };
-
-// // ユーザーデータを取得する関数（実際の実装は任意）
-// const getUserData = () => {
-//     // ローカルストレージやCookieからユーザーデータを取得する処理
-//     return localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null;
-// };
-
 /**
  * トークンの取得状況を通知する関数
  * 使用用途：
