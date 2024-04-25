@@ -26,13 +26,13 @@ export const Header = () => {
             {isLoggedIn ? (
               <Button color="inherit" component={Link} to="/openchat">Open</Button>
             ) : (
-              <Button color="inherit" onClick={loginAlert} disabled>Open Chat</Button>
+              <Button color="inherit" onClick={loginAlert} disabled>Open</Button>
             )}
 
             {isLoggedIn ? (
               <Button color="inherit" component={Link} to="/privatechat" disabled>Private</Button>
             ) : (
-              <Button color="inherit" onClick={loginAlert} disabled>Private Chat</Button>
+              <Button color="inherit" onClick={loginAlert} disabled>Private</Button>
             )}
 
             {isLoggedIn ? (
