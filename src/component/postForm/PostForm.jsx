@@ -12,6 +12,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import { pushPost } from '../../api/api';
+import './PostForm.css';
 
 const PostForm = ({ onPostSuccess }) => {
     const [formData, setFormData] = useState({
@@ -75,19 +76,21 @@ const PostForm = ({ onPostSuccess }) => {
                 <DialogTitle>投稿</DialogTitle>
                 <DialogContent>
                     <DialogContentText>投稿内容を入力してください</DialogContentText>
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="outlined-multiline-static"
-                        label="投稿内容"
-                        multiline
-                        name="content"
-                        value={formData.content}
-                        fullWidth
-                        variant="outlined"
-                        onChange={handleInputChange}
-                    />
+                    <div className="custom-text-field">
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            id="outlined-multiline-static"
+                            label="投稿内容"
+                            multiline
+                            name="content"
+                            value={formData.content}
+                            fullWidth
+                            variant="outlined"
+                            onChange={handleInputChange}
+                        />
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Cancel</Button>

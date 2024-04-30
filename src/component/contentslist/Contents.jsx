@@ -3,8 +3,10 @@ import { Button, IconButton, Menu, MenuItem, CircularProgress, DialogActions, Te
 import { getPostData, pushComment } from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV, faComment, faSyncAlt, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate  } from 'react-router-dom';
 
 const Contents = () => {
+  const navigate  = useNavigate ();
   const [data, setData] = useState([]); // 一覧を取得するstate
   const [loading, setLoading] = useState(true); // データ取得中の状態を管理するstate
 
@@ -93,7 +95,7 @@ const Contents = () => {
 
   // アカウントidを取得（相手のプロフィール表示画面の制御実装予定）
   const getAccount_id = (account_id) => {
-    console.log(account_id);
+    navigate(`/profile/${account_id}`);
   }
 
   return (

@@ -79,6 +79,25 @@ export const createUser = async (name, account_name, email, password) => {
     }
 };
 
+export const deleteUser = async () => {
+    try {
+        const token = cookies.get('token'); // Cookieからトークンを取得
+        const response = await axios.delete('http://localhost/api/deleteUser', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if(response.status === 200) {
+            const data = response.data;
+            console.log(data);
+            window.location.href = '/login'; // ログインページにリダイレクト
+        }
+    } catch (error) {
+        alert(error);
+        console.log(error);
+    }
+}
+
 // 投稿30件と返信を取得する処理
 export const getPostData = async () => {
     try {
@@ -153,10 +172,14 @@ export const pushComment = async (postId, content) => {
 };
 
 // ユーザー情報の取得API
-export const getUserProfile = async () => {
+export const getUserProfile = async (accountId = null) => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
-        const response = await axios.get('http://localhost/api/profile', {
+        let url = 'http://localhost/api/profile';
+        if (accountId) {
+            url += `/${accountId}`;
+        }
+        const response = await axios.get(url, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -179,10 +202,16 @@ export const getUserProfile = async () => {
 };
 
 // ユーザー情報の更新API
-export const updateUserProfile = async () => {
+export const updateUserProfile = async (account_name, birthday, gender, place, introduction) => {
     try {
         const token = cookies.get('token'); // Cookieからトークンを取得
-        const response = await axios.get('http://localhost/api/profile', {
+        const response = await axios.post('http://localhost/api/profile', {
+            account_name: account_name,
+            gender: gender,
+            place: place,
+            birthday: birthday,
+            introduction: introduction
+        }, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -190,6 +219,7 @@ export const updateUserProfile = async () => {
         if (response.status === 200) {
             const data = response.data;
             console.log(data);
+            window.location.href = '/mypage';
             return data;
         } else {
             alert('サーバーエラーが発生しました。');
