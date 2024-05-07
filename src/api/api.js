@@ -219,7 +219,7 @@ export const updateUserProfile = async (account_name, birthday, gender, place, i
         if (response.status === 200) {
             const data = response.data;
             console.log(data);
-            window.location.href = '/mypage';
+            window.location.href = '/profile';
             return data;
         } else {
             alert('サーバーエラーが発生しました。');
