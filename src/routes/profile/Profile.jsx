@@ -1,58 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
-import { logout, getUserProfile, deleteUser } from '../../api/api';
+// src/components/MyPage.js
+import React from 'react';
+import { Button, Dialog, DialogActions, DialogTitle } from '../../muiImports';
 import { Link } from 'react-router-dom';
-import { editProfileInf } from '../editprofile/EditProfile';
-import { useParams } from 'react-router-dom';
+import useProfile from './useProfile';
+import { editProfileInf } from '../editprofile/EditProfile';;
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+};
 
 const MyPage = () => {
-  const { id } = useParams();
-  const [userProfile, setUserProfile] = useState(null);
-  const [isOwnProfile, setIsOwnProfile] = useState(false);
-  const [logoutDialog, setLogoutDialog] = useState(false);
-  const [accountDeleteConfirmDialog, setAccountDeleteConfirmDialog] = useState(false);
+  const {
+    userProfile,
+    isOwnProfile,
+    logoutDialog,
+    setLogoutDialog,
+    accountDeleteConfirmDialog,
+    setAccountDeleteConfirmDialog,
+    handleLogout,
+    deleteAccount
+  } = useProfile();
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const data = await getUserProfile(id);
-        setUserProfile(data);
-        setIsOwnProfile(data.isOwnProfile);
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-      }
-    };
-
-    fetchUserProfile();
-  }, [id]);
-
-  //取得日時のフォーマット
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-  };
-
-  // ログアウト処理の実行
-  const handleLogout = async () => {
-    try {
-      await logout();
-      // ログアウト後の処理を追加
-    } catch (error) {
-      console.error('Logout error:', error);
-    }
-  };
-
-  // アカウント削除処理
-  const deleteAccount = async () => {
-    try {
-      await deleteUser();
-      // アカウント削除後の処理を追加
-    } catch (error) {
-      console.error('Account deletion error:', error);
-    }
-  };
-
-  // 編集ページに情報を送信するハンドラー
   const postEditProfilePage = () => {
     editProfileInf(
       userProfile.account_name,
@@ -114,9 +83,7 @@ const MyPage = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          ログアウトしてもええか？
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">ログアウトしてもええか？</DialogTitle>
         <DialogActions>
           <Button onClick={() => setLogoutDialog(false)}>やめいや</Button>
           <Button onClick={handleLogout}>ええで</Button>
@@ -129,18 +96,16 @@ const MyPage = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          アカウント消えてまうで？
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">アカウント消えてまうで？</DialogTitle>
         <DialogActions>
           <Button onClick={() => setAccountDeleteConfirmDialog(false)}>やめいや</Button>
           <Button onClick={deleteAccount}>ええで</Button>
         </DialogActions>
       </Dialog>
 
-      <br></br>
+      <br />
       <b>投稿一覧</b>
-      <hr></hr>
+      <hr />
       {userProfile && userProfile.posts && (
         <div>
           {userProfile.posts.map((post) => (
@@ -151,7 +116,7 @@ const MyPage = () => {
               <p>
                 <strong>投稿内容:</strong> {post.content}
               </p>
-              <hr></hr>
+              <hr />
             </div>
           ))}
         </div>

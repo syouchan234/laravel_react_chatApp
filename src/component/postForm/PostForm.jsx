@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Button,
     TextField,
@@ -7,54 +7,22 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import SendIcon from '@mui/icons-material/Send';
-import { pushPost } from '../../api/api';
+    DialogTitle,
+    EditIcon,
+    SendIcon
+} from '../../muiImports';
+import usePostForm from './usePostForm';
 import './PostForm.css';
 
 const PostForm = ({ onPostSuccess }) => {
-    const [formData, setFormData] = useState({
-        content: '',
-    });
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const post = async () => {
-        const { content } = formData;
-        if (!content) {
-            alert("投稿内容を入力してください");
-            return;
-        }
-        try {
-            await pushPost(content);
-            if (onPostSuccess) {
-                onPostSuccess();
-                handleClose();
-            }
-        } catch (error) {
-            console.error('投稿に失敗しました。', error);
-            alert('投稿に失敗しました。もう一度お試しください。');
-        }
-    };
-
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-        setFormData({ content: '' }); // フォームをクリアする
-    };
+    const {
+        formData,
+        open,
+        handleInputChange,
+        handleClickOpen,
+        handleClose,
+        post,
+    } = usePostForm(onPostSuccess);
 
     return (
         <div>
@@ -62,17 +30,7 @@ const PostForm = ({ onPostSuccess }) => {
                 <EditIcon />
             </Fab>
 
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                    component: 'form',
-                    onSubmit: (event) => {
-                        event.preventDefault();
-                        post(); // フォーム送信時に投稿する
-                    },
-                }}
-            >
+            <Dialog open={open} onClose={handleClose} PaperProps={{ component: 'form', onSubmit: (event) => { event.preventDefault(); post(); }, }}>
                 <DialogTitle>投稿</DialogTitle>
                 <DialogContent>
                     <DialogContentText>投稿内容を入力してください</DialogContentText>
@@ -88,13 +46,12 @@ const PostForm = ({ onPostSuccess }) => {
                             value={formData.content}
                             fullWidth
                             variant="outlined"
-                            onChange={handleInputChange}
-                        />
+                            onChange={handleInputChange}/>
                     </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">Cancel</Button>
-                    <Button variant="contained" onClick={post} endIcon={<SendIcon />} color="primary">
+                    <Button variant="contained" type="submit" endIcon={<SendIcon />} color="primary">
                         Send
                     </Button>
                 </DialogActions>
