@@ -1,0 +1,9 @@
+.custom-text-field {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .custom-text-field {
+        width: 400px;
+    }
+}

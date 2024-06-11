@@ -5,7 +5,7 @@ import PostForm from '../../component/postForm/PostForm';
 const OpenChat = () => {
   const [contentsKey, setContentsKey] = useState(0);
   const handlePostSuccess = () => {
-    // 投稿が成功した後に Contents コンポーネントを更新する
+    // 投稿・リプライの投稿が成功した後にContentsコンポーネントを更新する
     // Contents コンポーネントの key プロパティを変更して再レンダリングをトリガーして
     // 最新の投稿情報を取得する
     setContentsKey((prevKey) => prevKey + 1);
