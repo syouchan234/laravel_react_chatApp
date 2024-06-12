@@ -13,7 +13,7 @@ export const Header = () => {
 
   useEffect(() => {
     const checkToken = async () => {
-      const tokenCheck = await isTokenCheck();
+      const tokenCheck = isTokenCheck();
       setLoggedIn(tokenCheck);
     };
     checkToken();
@@ -26,13 +26,13 @@ export const Header = () => {
             {isLoggedIn ? (
               <Button color="inherit" component={Link} to="/openchat">Open</Button>
             ) : (
-              <Button color="inherit" onClick={loginAlert} disabled>Open Chat</Button>
+              <Button color="inherit" onClick={loginAlert} disabled>Open</Button>
             )}
 
             {isLoggedIn ? (
               <Button color="inherit" component={Link} to="/privatechat" disabled>Private</Button>
             ) : (
-              <Button color="inherit" onClick={loginAlert} disabled>Private Chat</Button>
+              <Button color="inherit" onClick={loginAlert} disabled>Private</Button>
             )}
 
             {isLoggedIn ? (
@@ -42,7 +42,7 @@ export const Header = () => {
             )}
 
             {isLoggedIn ? (
-              <Button color="inherit" component={Link} to="/mypage">MyPage</Button>
+              <Button color="inherit" component={Link} to="/profile">Profile</Button>
             ) : (
               <Button color="inherit" component={Link} to="/login">Login</Button>
             )}

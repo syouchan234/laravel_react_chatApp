@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import { Button, TextField, Card, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Button, TextField, Card, FormControl, 
+  InputLabel, Select, MenuItem } from '@mui/material';
+import { updateUserProfile } from '../../api/api';
 import { Link } from 'react-router-dom';
+
+export const editProfileInf = (account_name,birthday,gender,place,introduction) => {
+  console.log(account_name,birthday,gender,place,introduction);
+}
 
 const EditProfile = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +14,7 @@ const EditProfile = () => {
     year: '',
     month: '',
     day: '',
-    sex: '',
+    gender: '',
     place: '',
     introduction: '',
     error: ''
@@ -33,14 +39,15 @@ const EditProfile = () => {
   };
 
   const handleUpdateProfile = () => {
-    const { account_name, year, month, day, sex, place, introduction } = formData;
+    const { account_name, year, month, day, gender, place, introduction } = formData;
     if (!account_name) {
       setFormData({ ...formData, error: 'アカウント名は必須だ' });
       return;
     }
     const birthday = `${year}/${month}/${day}`;
-    console.log('profile update:', { account_name, birthday, sex, place, introduction });
+    console.log('profile update:', { account_name, birthday, gender, place, introduction });
     // ここにAPIの処理を追加
+    updateUserProfile(account_name,birthday,gender,place,introduction);
   };
 
   const currentDate = new Date();
@@ -98,17 +105,17 @@ const EditProfile = () => {
           margin="normal"
         />
         <FormControl variant="outlined" fullWidth margin="normal">
-          <InputLabel id="sex-label">性別</InputLabel>
+          <InputLabel id="gender-label">性別</InputLabel>
           <Select
-            labelId="sex-label"
-            value={formData.sex}
+            labelId="gender-label"
+            value={formData.gender}
             onChange={handleInputChange}
             label="性別"
-            name="sex"
+            name="gender"
           >
-            <MenuItem value="male">男</MenuItem>
-            <MenuItem value="female">女</MenuItem>
-            <MenuItem value="other">その他</MenuItem>
+            <MenuItem value="男">男</MenuItem>
+            <MenuItem value="女">女</MenuItem>
+            <MenuItem value="その他">その他</MenuItem>
           </Select>
         </FormControl>
         <div>誕生日</div>
@@ -179,7 +186,7 @@ const EditProfile = () => {
           </Button>
         </div>
         <div className="interval">
-          <Button variant="contained" color="primary" component={Link} to="/mypage">
+          <Button variant="contained" color="primary" component={Link} to="/profile">
             戻る
           </Button>
         </div>

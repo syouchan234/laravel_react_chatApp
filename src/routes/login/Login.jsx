@@ -14,7 +14,7 @@ export const LoginForm = () => {
     useEffect(() => {
         const checkToken = async () => {
             const tokenCheck = await isTokenCheck();
-            if (tokenCheck) window.location.href = '/mypage';
+            if (tokenCheck) window.location.href = '/profile';
         };
         checkToken();
     }, []);

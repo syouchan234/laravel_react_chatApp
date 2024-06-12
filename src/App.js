@@ -10,7 +10,7 @@ import OpenChat from './routes/openchat/OpenChat';
 import PrivateChat from './routes/privatechat/PrivateChat';
 import DM from './routes/dm/DM';
 // import Home from './routes/home/Home';
-import MyPage from './routes/mypage/MyPage';
+import Profile from './routes/profile/Profile';
 import Login from './routes/login/Login';
 import CreateAccount from "./routes/createaccount/CreateAccount";
 import EditProfile from "./routes/editprofile/EditProfile";
@@ -26,11 +26,12 @@ function App() {
         <Route path="/openchat" element={<OpenChat />} />
         <Route path="/privatechat" element={<PrivateChat />} />
         <Route path="/dm" element={<DM />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/profile/:id" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/createaccount" element={<CreateAccount />} />
-        <Route path="/editprofile" element={<EditProfile/>}/>
-        <Route path="/playground" element={<Playground/>}></Route>
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/playground" element={<Playground />} />
       </Routes>
     </div>
   );
