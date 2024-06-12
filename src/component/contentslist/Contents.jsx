@@ -134,6 +134,7 @@ const Contents = () => {
                 <IconButton aria-label="オプション" onClick={handleClick}>
                   <FontAwesomeIcon icon={faEllipsisV} />
                 </IconButton>
+
                 {/* コメントの表示 */}
                 {commentVisible[item.id] && item.comments.length > 0 && (
                   <div>
@@ -146,6 +147,7 @@ const Contents = () => {
                     ))}
                   </div>
                 )}
+                
                 {!commentVisible[item.id] && item.comments.length > 0 && (
                   <div>
                     <div onClick={() => toggleCommentVisibility(item.id)}>スレッドを表示</div>
