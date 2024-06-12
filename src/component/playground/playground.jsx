@@ -1,5 +1,10 @@
+/**
+ * 遊び場：マテリアルUIなど動きを確かめるページ
+ * 本番時には削除予定
+ */
+
 import * as React from 'react';
-import { useState } from 'react'; // useStateフックをインポートする
+import { useState } from 'react';
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
