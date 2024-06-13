@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Button } from '@mui/material';
+import { AppBar, Toolbar, Button } from '../../muiImports';
 import { Link } from 'react-router-dom';
 import { isTokenCheck } from '../../api/api';
 import './Header.css';

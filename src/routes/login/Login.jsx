@@ -1,56 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, Card, FormControl } from '@mui/material';
+import React from 'react';
+import {
+    TextField,
+    Button,
+    Card,
+    FormControl,
+    IconButton,
+    OutlinedInput,
+    InputLabel,
+    InputAdornment,
+    Visibility,
+    VisibilityOff
+} from '../../muiImports'
 import './Login.css';
 import { Link } from 'react-router-dom';
-import { login, isTokenCheck } from '../../api/api';
-import IconButton from '@mui/material/IconButton';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import useLogin from './useLogin';
 
 export const LoginForm = () => {
-    useEffect(() => {
-        const checkToken = async () => {
-            const tokenCheck = await isTokenCheck();
-            if (tokenCheck) window.location.href = '/profile';
-        };
-        checkToken();
-    }, []);
-
-    const [mail, setMail] = useState(''); // メールアドレス
-    const [password, setPassword] = useState(''); // パスワード
-    const [showPassword, setShowPassword] = useState(false); // パスワード表示制御用
-
-    const handleLogin = () => {
-        if (!mail || !password) {
-            alert('すべてのフィールドを入力してください');
-            return;
-        }
-        if (!isValidEmail(mail)) {
-            alert('有効なメールアドレスを入力してください');
-            return;
-        }
-        login(mail, password);
-    };
-
-    // メールアドレスの正規表現
-    const isValidEmail = (email) => {
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return pattern.test(email);
-    };
+    const {
+        mail,
+        setMail,
+        password,
+        setPassword,
+        showPassword,
+        handleClickShowPassword,
+        handleMouseDownPassword,
+        handleLogin
+    } = useLogin();
 
     const AL = () => {
         alert('お試し版にはんな機能あるかいな！');
-    };
-
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
     };
 
     return (

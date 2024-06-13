@@ -100,6 +100,11 @@ const Contents = () => {
     navigate(`/profile/${account_id}`);
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
+  };
+
   return (
     <div>
       <ReplyForm
@@ -124,6 +129,8 @@ const Contents = () => {
             data.map((item) => (
               <div key={item.id}>
                 <h3 onClick={() => getAccount_id(item.account_id)}>{item.account_name}</h3>
+                <p>投稿ID：{item.id}</p>
+                <p><strong>投稿Days:</strong>{formatDate(item.created_at)}</p>
                 <p><b>{item.content}</b></p>
                 <IconButton onClick={() => DialogOpen(item.id)}>
                   <FontAwesomeIcon icon={faComment} />
@@ -147,7 +154,7 @@ const Contents = () => {
                     ))}
                   </div>
                 )}
-                
+
                 {!commentVisible[item.id] && item.comments.length > 0 && (
                   <div>
                     <div onClick={() => toggleCommentVisibility(item.id)}>スレッドを表示</div>
