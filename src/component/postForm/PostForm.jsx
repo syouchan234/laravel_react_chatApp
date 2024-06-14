@@ -50,9 +50,9 @@ const PostForm = ({ onPostSuccess }) => {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">Cancel</Button>
+                    <Button onClick={handleClose} color="primary">キャンセル</Button>
                     <Button variant="contained" type="submit" endIcon={<SendIcon />} color="primary">
-                        Send
+                        送信
                     </Button>
                 </DialogActions>
             </Dialog>
