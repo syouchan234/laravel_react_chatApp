@@ -1,4 +1,3 @@
-// src/components/MyPage.js
 import React from 'react';
 import { Button, Dialog, DialogActions, DialogTitle } from '../../muiImports';
 import { Link } from 'react-router-dom';

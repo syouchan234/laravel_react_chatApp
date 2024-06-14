@@ -95,10 +95,15 @@ const Contents = () => {
     setAnchorEl(null);
   };
 
-  // アカウントidを取得（相手のプロフィール表示画面の制御実装予定）
+  // アカウント情報の表示画面
   const getAccount_id = (account_id) => {
     navigate(`/profile/${account_id}`);
   }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+  };
 
   return (
     <div>
@@ -124,6 +129,8 @@ const Contents = () => {
             data.map((item) => (
               <div key={item.id}>
                 <h3 onClick={() => getAccount_id(item.account_id)}>{item.account_name}</h3>
+                <p>投稿ID：{item.id}</p>
+                <p><strong>投稿Days:</strong>{formatDate(item.created_at)}</p>
                 <p><b>{item.content}</b></p>
                 <IconButton onClick={() => DialogOpen(item.id)}>
                   <FontAwesomeIcon icon={faComment} />
@@ -141,13 +148,24 @@ const Contents = () => {
                     <div onClick={() => toggleCommentVisibility(item.id)}>スレッドを非表示</div>
                     {item.comments.map((comment) => (
                       <div key={comment.id}>
+                        <p>投稿ID：{comment.id}</p>
                         <p><b>{comment.account_name}</b></p>
+                        <p><strong>投稿Days:</strong>{formatDate(comment.created_at)}</p>
                         <p>{comment.content}</p>
+                        <IconButton onClick={() => DialogOpen(item.id)}>
+                          <FontAwesomeIcon icon={faComment} />
+                        </IconButton>
+                        <IconButton onClick={handleLike}>
+                          <FontAwesomeIcon icon={faHeart} color={isLiked ? 'red' : 'gray'} />
+                        </IconButton>
+                        <IconButton aria-label="オプション" onClick={handleClick}>
+                          <FontAwesomeIcon icon={faEllipsisV} />
+                        </IconButton>
                       </div>
                     ))}
                   </div>
                 )}
-                
+
                 {!commentVisible[item.id] && item.comments.length > 0 && (
                   <div>
                     <div onClick={() => toggleCommentVisibility(item.id)}>スレッドを表示</div>
